@@ -1,9 +1,14 @@
-# api documentation for  [surge (v0.19.0)](https://github.com/sintaxi/surge#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-surge.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-surge) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-surge.svg)](https://travis-ci.org/npmdoc/node-npmdoc-surge)
+# npmdoc-surge
+
+#### api documentation for  [surge (v0.19.0)](https://github.com/sintaxi/surge#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-surge.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-surge) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-surge.svg)](https://travis-ci.org/npmdoc/node-npmdoc-surge)
+
 #### CDN for front-end developers
 
-[![NPM](https://nodei.co/npm/surge.png?downloads=true)](https://www.npmjs.com/package/surge)
+[![NPM](https://nodei.co/npm/surge.png?downloads=true&downloadRank=true&stars=true)](https://www.npmjs.com/package/surge)
 
-[![apidoc](https://npmdoc.github.io/node-npmdoc-surge/build/screenCapture.buildNpmdoc.browser._2Fhome_2Ftravis_2Fbuild_2Fnpmdoc_2Fnode-npmdoc-surge_2Ftmp_2Fbuild_2Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-surge/build/apidoc.html)
+- [https://npmdoc.github.io/node-npmdoc-surge/build/apidoc.html](https://npmdoc.github.io/node-npmdoc-surge/build/apidoc.html)
+
+[![apidoc](https://npmdoc.github.io/node-npmdoc-surge/build/screenCapture.buildCi.browser.%252Ftmp%252Fbuild%252Fapidoc.html.png)](https://npmdoc.github.io/node-npmdoc-surge/build/apidoc.html)
 
 ![npmPackageListing](https://npmdoc.github.io/node-npmdoc-surge/build/screenCapture.npmPackageListing.svg)
 
@@ -17,8 +22,7 @@
 
 {
     "author": {
-        "name": "Brock Whitten",
-        "email": "brock@chloi.io"
+        "name": "Brock Whitten"
     },
     "bin": {
         "surge": "./lib/cli.js"
@@ -65,17 +69,14 @@
     "main": "./lib/surge.js",
     "maintainers": [
         {
-            "name": "kennethormandy",
-            "email": "hello@kennethormandy.com"
+            "name": "kennethormandy"
         },
         {
-            "name": "sintaxi",
-            "email": "brock@sintaxi.com"
+            "name": "sintaxi"
         }
     ],
     "name": "surge",
     "optionalDependencies": {},
-    "readme": "ERROR: No README data found!",
     "repository": {
         "type": "git",
         "url": "git+https://github.com/sintaxi/surge.git"
@@ -87,16 +88,6 @@
     "version": "0.19.0"
 }
 ```
-
-
-
-# <a name="apidoc.tableOfContents"></a>[table of contents](#apidoc.tableOfContents)
-
-#### [module surge](#apidoc.module.surge)
-
-
-
-# <a name="apidoc.module.surge"></a>[module surge](#apidoc.module.surge)
 
 
 
