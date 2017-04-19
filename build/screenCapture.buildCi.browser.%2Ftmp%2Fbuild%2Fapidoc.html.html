@@ -1,4 +1,4 @@
-<div class="apidocDiv">
+<html><head></head><body><div class="apidocDiv">
 <style>
 /*csslint
 */
@@ -47,17 +47,10 @@
 }
 </style>
 <h1>api documentation for
-    <a
-
-        href="https://github.com/sintaxi/surge#readme"
-
-    >surge (v0.19.0)</a>
+    <a href="https://github.com/sintaxi/surge#readme">surge (v0.19.0)</a>
 </h1>
 <h4>CDN for front-end developers</h4>
-<div class="apidocSectionDiv"><a
-    href="#apidoc.tableOfContents"
-    id="apidoc.tableOfContents"
-><h1>table of contents</h1></a><ol>
+<div class="apidocSectionDiv"><a href="#apidoc.tableOfContents" id="apidoc.tableOfContents"><h1>table of contents</h1></a><ol>
 
     <li class="apidocModuleLi"><a href="#apidoc.module.surge">module surge</a><ol>
 
@@ -136,17 +129,17 @@
 
   var ep = config.endpoint
     ? config.endpoint
-    : config.platform ? &#x22;https://surge.&#x22; + config.platform : &#x27;https://surge.surge.sh&#x27;
+    : config.platform ? "https://surge." + config.platform : 'https://surge.surge.sh'
 
-  config.platform = config.platform || &#x22;surge.sh&#x22;
+  config.platform = config.platform || "surge.sh"
 
   var options = {
     alias: {
-      p: &#x27;project&#x27;,
-      d: &#x27;domain&#x27;,
-      e: &#x27;endpoint&#x27;,
-      a: &#x27;add&#x27;,
-      r: &#x27;remove&#x27;
+      p: 'project',
+      d: 'domain',
+      e: 'endpoint',
+      a: 'add',
+      r: 'remove'
     },
     default: { e: ep }
   }
@@ -158,12 +151,12 @@
     var argv = minimist(args, options)
     var cmd  = argv._[0]
 
-    var commands = [&#x22;login&#x22;, &#x22;logout&#x22;, &#x22;whoami&#x22;, &#x22;list&#x22;, &#x22;publish&#x22;, &#x22;teardown&#x22;, &#x22;token&#x22;, &#x22;plus&#x22;, &#x22;ssl&#x22;]
+    var commands = ["login", "logout", "whoami", "list", "publish", "teardown", "token", "plus", "ssl"]
 
     if (commands.indexOf(cmd) !== -1) {
       argv._.shift()
       surge[cmd]({})(argv)
-    } else if(config.default &#x26;&#x26; commands.indexOf(config.default) !== -1 ){
+    } else if(config.default &amp;&amp; commands.indexOf(config.default) !== -1 ){
       surge[config.default]({})(argv)
     }
   }
@@ -301,7 +294,7 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">setDomainFromArgs = function (req, next){
-  if (!req.domain &#x26;&#x26; req.argv._[0]) {
+  if (!req.domain &amp;&amp; req.argv._[0]) {
     req.domain = req.argv._[0]
   }
   return next()
@@ -319,10 +312,10 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">setDomainFromCname = function (req, next){
-  if (!req.domain &#x26;&#x26; !req.suggestedDomain) {
+  if (!req.domain &amp;&amp; !req.suggestedDomain) {
 
     try {
-      var cname = fs.readFileSync(path.join(req.project || process.cwd(), &#x22;CNAME&#x22;)).toString()
+      var cname = fs.readFileSync(path.join(req.project || process.cwd(), "CNAME")).toString()
       req.domain = cname.split(os.EOL)[0].trim()
     } catch(e) {}
   }
@@ -342,13 +335,13 @@
     <ul>
     <li>description and source-code<pre class="apidocCodePre">suggestDomainFromCname = function (req, next){
 
-  if (!req.domain &#x26;&#x26; !req.suggestedDomain) {
+  if (!req.domain &amp;&amp; !req.suggestedDomain) {
     try {
-      var cname = fs.readFileSync(path.join(req.project || process.cwd(), &#x22;CNAME&#x22;)).toString()
+      var cname = fs.readFileSync(path.join(req.project || process.cwd(), "CNAME")).toString()
       req.suggestedDomain = cname.split(os.EOL)[0].trim()
     }
     catch(e) {
-      // console.log(e) // This will produce a visible error when there’s no CNAME file
+      // console.log(e) // This will produce a visible error when thereâ€™s no CNAME file
     }
   }
 
@@ -367,8 +360,8 @@
     </h2>
     <ul>
     <li>description and source-code<pre class="apidocCodePre">suggestDomainFromGenerator = function (req, next){
-  if (!req.domain &#x26;&#x26; !req.suggestedDomain) {
-    req.suggestedDomain = [moniker.choose(), req.config.platform].join(&#x22;.&#x22;)
+  if (!req.domain &amp;&amp; !req.suggestedDomain) {
+    req.suggestedDomain = [moniker.choose(), req.config.platform].join(".")
   }
   return next()
 }</pre></li>
@@ -384,3 +377,4 @@
     ]
 </div>
 </div>
+</body></html>

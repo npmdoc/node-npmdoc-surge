@@ -61,12 +61,320 @@
 
     <li class="apidocModuleLi"><a href="#apidoc.module.surge">module surge</a><ol>
 
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.surge.surge">
+            function <span class="apidocSignatureSpan"></span>surge
+            <span class="apidocSignatureSpan">(config)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <span class="apidocSignatureSpan">object <span class="apidocSignatureSpan">surge.</span>discovery</span>
+
+        </li>
+
+    </ol></li>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.surge.discovery">module surge.discovery</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.surge.discovery.setDomainFromArgs">
+            function <span class="apidocSignatureSpan">surge.discovery.</span>setDomainFromArgs
+            <span class="apidocSignatureSpan">(req, next)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.surge.discovery.setDomainFromCname">
+            function <span class="apidocSignatureSpan">surge.discovery.</span>setDomainFromCname
+            <span class="apidocSignatureSpan">(req, next)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.surge.discovery.suggestDomainFromCname">
+            function <span class="apidocSignatureSpan">surge.discovery.</span>suggestDomainFromCname
+            <span class="apidocSignatureSpan">(req, next)</span>
+            </a>
+
+        </li>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.surge.discovery.suggestDomainFromGenerator">
+            function <span class="apidocSignatureSpan">surge.discovery.</span>suggestDomainFromGenerator
+            <span class="apidocSignatureSpan">(req, next)</span>
+            </a>
+
+        </li>
+
     </ol></li>
 
 </ol></div>
 
 <div class="apidocSectionDiv">
 <h1><a href="#apidoc.module.surge" id="apidoc.module.surge">module surge</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.surge.surge" id="apidoc.element.surge.surge">
+        function <span class="apidocSignatureSpan"></span>surge
+        <span class="apidocSignatureSpan">(config)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">surge = function (config){
+  config = config || {}
+
+  var ep = config.endpoint
+    ? config.endpoint
+    : config.platform ? &#x22;https://surge.&#x22; + config.platform : &#x27;https://surge.surge.sh&#x27;
+
+  config.platform = config.platform || &#x22;surge.sh&#x22;
+
+  var options = {
+    alias: {
+      p: &#x27;project&#x27;,
+      d: &#x27;domain&#x27;,
+      e: &#x27;endpoint&#x27;,
+      a: &#x27;add&#x27;,
+      r: &#x27;remove&#x27;
+    },
+    default: { e: ep }
+  }
+
+  var surge = function(args){
+    // will be one of:
+    // commander, yargs, process.argv.split(2), OR minimist
+
+    var argv = minimist(args, options)
+    var cmd  = argv._[0]
+
+    var commands = [&#x22;login&#x22;, &#x22;logout&#x22;, &#x22;whoami&#x22;, &#x22;list&#x22;, &#x22;publish&#x22;, &#x22;teardown&#x22;, &#x22;token&#x22;, &#x22;plus&#x22;, &#x22;ssl&#x22;]
+
+    if (commands.indexOf(cmd) !== -1) {
+      argv._.shift()
+      surge[cmd]({})(argv)
+    } else if(config.default &#x26;&#x26; commands.indexOf(config.default) !== -1 ){
+      surge[config.default]({})(argv)
+    }
+  }
+
+  var stub = function(req, next){ next(); }
+
+  surge.token = function(hooks){
+    var hooks = hooks || {}
+    var preAuth     = hooks.preAuth       || stub
+    var postAuth    = hooks.postAuth      || stub
+    var onion = [
+      whitelist, endpoint, pkg, help, version, space,
+      preAuth, creds, welcome, tokencheck, email, auth, postAuth,
+      token, space
+    ]
+    return function(){
+      var argv = parse(arguments[arguments.length -1])
+      skin({
+        config: config,
+        argv: argv,
+        read: read
+      }, onion)
+    }
+  }
+
+  surge.login = function(hooks){
+    var hooks = hooks || {}
+    var preAuth     = hooks.preAuth       || stub
+    var postAuth    = hooks.postAuth      || stub
+    var onion = [
+      whitelist, endpoint, pkg, help, version, space,
+      preAuth, creds, welcome, email, auth, postAuth,
+      login, space
+    ]
+    return function(){
+      var argv = parse(arguments[arguments.length -1])
+      skin({
+        config: config,
+        argv: argv,
+        read: read
+      }, onion)
+    }
+  }
+
+  surge.logout = function(hooks){
+    var hooks = hooks || {}
+    var onion = [
+      whitelist, endpoint, pkg, help, version, space,
+      creds, logout, space
+    ]
+    return function(){
+      var argv = parse(arguments[arguments.length -1])
+      skin({
+        config: config,
+        argv: argv,
+        read: read
+      }, onion)
+    }
+  }
+
+  surge.publish = function(hooks){
+    var hooks = hooks || {}
+    var preAuth     = hooks.preAuth       || stub
+    var postAuth    = hooks.postAuth      || stub
+    var preProject  = hooks.preProject    || stub
+    var postProject = hooks.postProject   || stub
+    var preSize     = hooks.preSize       || stub
+    var postSize    = hooks.postSize      || stub
+    var preDomain   = hooks.preDomain     || stub
+    var postDomain  = hooks.postDomain    || stub
+    var prePublish  = hooks.prePublish    || stub
+    var postPublish = hooks.postPublish   || stub
+    var onion = [
+      whitelist, endpoint, pkg, help, version, space,
+      preAuth, creds, welcome, tokencheck, email, auth, postAuth, shorthand,
+      preProject, project, postProject,
+      preSize, size, postSize,
+      preDomain, discovery.setDomainFromCname, discovery.suggestDomainFromGenerator, domain, postDomain,
+      prePublish, protocol, deploy, postPublish,
+      ipaddress
+    ]
+    return function(){
+      var argv = parse(arguments[arguments.length -1])
+      skin({
+        config: config,
+        argv: argv,
+        read: read
+      }, onion)
+    }
+  }
+
+  surge.whoami = function(hooks){
+    var hooks = hooks || {}
+    var onion = [
+      whitelist, endpoint, pkg, help, version, space,
+      creds, tokencheck, whoami
+    ]
+    return function(){
+      var argv = parse(arguments[arguments.length -1])
+      skin({
+        config: config,
+        argv: argv,
+        read: read
+      }, onion)
+    }
+  }
+
+  surge.list = function(hooks){
+    var hooks = hooks || {}
+    var preAuth   = hooks.preAuth  || stub
+    var postAuth  = hooks.postAuth || stub
+    var onion = [
+      whitelist, endpoint, pkg, help, version, space,
+      preAuth, creds, welcome, tokencheck, email, auth, postAuth,
+      list, space
+    ]
+    return functi ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+
+</div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.surge.discovery" id="apidoc.module.surge.discovery">module surge.discovery</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.surge.discovery.setDomainFromArgs" id="apidoc.element.surge.discovery.setDomainFromArgs">
+        function <span class="apidocSignatureSpan">surge.discovery.</span>setDomainFromArgs
+        <span class="apidocSignatureSpan">(req, next)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">setDomainFromArgs = function (req, next){
+  if (!req.domain &#x26;&#x26; req.argv._[0]) {
+    req.domain = req.argv._[0]
+  }
+  return next()
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.surge.discovery.setDomainFromCname" id="apidoc.element.surge.discovery.setDomainFromCname">
+        function <span class="apidocSignatureSpan">surge.discovery.</span>setDomainFromCname
+        <span class="apidocSignatureSpan">(req, next)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">setDomainFromCname = function (req, next){
+  if (!req.domain &#x26;&#x26; !req.suggestedDomain) {
+
+    try {
+      var cname = fs.readFileSync(path.join(req.project || process.cwd(), &#x22;CNAME&#x22;)).toString()
+      req.domain = cname.split(os.EOL)[0].trim()
+    } catch(e) {}
+  }
+  return next()
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.surge.discovery.suggestDomainFromCname" id="apidoc.element.surge.discovery.suggestDomainFromCname">
+        function <span class="apidocSignatureSpan">surge.discovery.</span>suggestDomainFromCname
+        <span class="apidocSignatureSpan">(req, next)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">suggestDomainFromCname = function (req, next){
+
+  if (!req.domain &#x26;&#x26; !req.suggestedDomain) {
+    try {
+      var cname = fs.readFileSync(path.join(req.project || process.cwd(), &#x22;CNAME&#x22;)).toString()
+      req.suggestedDomain = cname.split(os.EOL)[0].trim()
+    }
+    catch(e) {
+      // console.log(e) // This will produce a visible error when there’s no CNAME file
+    }
+  }
+
+  return next()
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+
+    <h2>
+        <a href="#apidoc.element.surge.discovery.suggestDomainFromGenerator" id="apidoc.element.surge.discovery.suggestDomainFromGenerator">
+        function <span class="apidocSignatureSpan">surge.discovery.</span>suggestDomainFromGenerator
+        <span class="apidocSignatureSpan">(req, next)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">suggestDomainFromGenerator = function (req, next){
+  if (!req.domain &#x26;&#x26; !req.suggestedDomain) {
+    req.suggestedDomain = [moniker.choose(), req.config.platform].join(&#x22;.&#x22;)
+  }
+  return next()
+}</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
 
 </div>
 
