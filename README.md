@@ -1,6 +1,6 @@
 # npmdoc-surge
 
-#### api documentation for  [surge (v0.19.0)](https://github.com/sintaxi/surge#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-surge.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-surge) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-surge.svg)](https://travis-ci.org/npmdoc/node-npmdoc-surge)
+#### basic api documentation for  [surge (v0.19.0)](https://github.com/sintaxi/surge#readme)  [![npm package](https://img.shields.io/npm/v/npmdoc-surge.svg?style=flat-square)](https://www.npmjs.org/package/npmdoc-surge) [![travis-ci.org build-status](https://api.travis-ci.org/npmdoc/node-npmdoc-surge.svg)](https://travis-ci.org/npmdoc/node-npmdoc-surge)
 
 #### CDN for front-end developers
 
